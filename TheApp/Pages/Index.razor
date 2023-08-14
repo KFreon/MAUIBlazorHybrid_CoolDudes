@@ -1,7 +1,29 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<h1>Are you a cool dude?</h1>
+<div class="add-button"><button @onclick="@(a => ShowModal = true)">Add a cooldude</button></div>
+<div class="flex-area">
+    <div>
+        <h2>Cool Dudes 😎</h2>
+        <ListComponent />
+    </div>
+    <div style="border: 1px solid gray; height: 95%; margin-top: 1rem;"></div>
+    <div>
+        <h2>Uncool Dudes 😭</h2>
+        <ListComponent />
+    </div>
+</div>
+@if (ShowModal) {
+    <div class="modal fade show" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-header">
+                <h2>Add thing</h2>
+            </div>
+        </div>
+    </div>
+}
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    public bool ShowModal{ get; set; }
+}

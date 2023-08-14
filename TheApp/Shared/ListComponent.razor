@@ -1,0 +1,17 @@
+﻿@using TheApp.Data;
+<ul>
+    @foreach (var dude in Dudes)
+    {
+        <li style="display: flex; justify-content: space-around;">
+            <p>
+                <span>@dude.Name</span>
+                <span>@(dude.AreTheyACoolDude ? "😎" : "😭")</span>
+            </p>
+            <button>X</button>
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter] public List<CoolDude> Dudes { get; set; } = new();
+}
