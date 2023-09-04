@@ -1,29 +1,43 @@
 ﻿@page "/"
+@using TheApp.Data;
 
 <h1>Are you a cool dude?</h1>
-<div class="add-button"><button @onclick="@(a => ShowModal = true)">Add a cooldude</button></div>
+<div class="add-button"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmodal">Add a cooldude</button></div>
 <div class="flex-area">
     <div>
         <h2>Cool Dudes 😎</h2>
-        <ListComponent />
+        <ListComponent Dudes="@CoolDudes" DeleteADude="@DeleteADude" />
     </div>
     <div style="border: 1px solid gray; height: 95%; margin-top: 1rem;"></div>
     <div>
         <h2>Uncool Dudes 😭</h2>
-        <ListComponent />
+        <ListComponent Dudes="@UncoolDudes" DeleteADude="@DeleteADude" />
     </div>
 </div>
-@if (ShowModal) {
-    <div class="modal fade show" role="dialog">
-        <div class="modal-dialog" role="document">
+<div class="modal fade" id="addmodal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-                <h2>Add thing</h2>
+                <h1 class="modal-title">Add a cool dude 😎🏎️</h1>
             </div>
+            <EditForm Model="@Deets" OnValidSubmit="@(() => AddACoolDude(Deets))">
+                <div class="modal-body">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <label>
+                        Your name
+                        <InputText DisplayName="Your name" @bind-Value="@Deets.Name" />
+                    </label>
+                    <label>
+                        Cool?
+                        <InputCheckbox DisplayName="Cool?" @bind-Value="@Deets.IsCool" />
+                    </label>
+                    <div class="modal-footer">
+                        <button data-bs-dismiss="modal" type="submit">Add</button>
+                    </div>
+                </div>
+            </EditForm>
         </div>
     </div>
-}
+</div>
 
-
-@code {
-    public bool ShowModal{ get; set; }
-}

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TheApp.Data;
 
 namespace TheApp
@@ -16,6 +18,11 @@ namespace TheApp
                 });
 
             builder.Services.AddMauiBlazorWebView();
+
+            builder.Services.AddTransient<IDataService, DataService>();
+
+            var migrationsAssembly = typeof(AppDbContext).Assembly.GetName().Name;
+            builder.Services.AddDbContext<AppDbContext>(b => b.UseSqlite("DataSource=lolthings.db", x => x.MigrationsAssembly(migrationsAssembly)));
 
 #if DEBUG
     		builder.Services.AddBlazorWebViewDeveloperTools();

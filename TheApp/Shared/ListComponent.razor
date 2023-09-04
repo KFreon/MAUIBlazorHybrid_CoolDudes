@@ -1,4 +1,7 @@
-﻿@using TheApp.Data;
+﻿@using Database;
+@using TheApp.Data;
+@using System.Collections.ObjectModel;
+
 <ul>
     @foreach (var dude in Dudes)
     {
@@ -7,11 +10,12 @@
                 <span>@dude.Name</span>
                 <span>@(dude.AreTheyACoolDude ? "😎" : "😭")</span>
             </p>
-            <button>X</button>
+            <button @onclick="(e => DeleteADude(dude))">X</button>
         </li>
     }
 </ul>
 
 @code {
-    [Parameter] public List<CoolDude> Dudes { get; set; } = new();
+    [Parameter] public ObservableCollection<CoolDude> Dudes { get; set; }
+    [Parameter] public Func<CoolDude, Task> DeleteADude{ get; set; }
 }
