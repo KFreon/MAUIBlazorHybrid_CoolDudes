@@ -22,7 +22,8 @@ namespace TheApp
             builder.Services.AddTransient<IDataService, DataService>();
 
             var migrationsAssembly = typeof(AppDbContext).Assembly.GetName().Name;
-            builder.Services.AddDbContext<AppDbContext>(b => b.UseSqlite("DataSource=lolthings.db", x => x.MigrationsAssembly(migrationsAssembly)));
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "database.db3");
+            builder.Services.AddDbContext<AppDbContext>(b => b.UseSqlite($"Filename={dbPath}.db", x => x.MigrationsAssembly(migrationsAssembly)));
 
 #if DEBUG
     		builder.Services.AddBlazorWebViewDeveloperTools();
